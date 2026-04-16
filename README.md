@@ -1,1 +1,1 @@
-# comp484-project-2
+pages: https://keanoaquino.github.io/comp484-project-2/
