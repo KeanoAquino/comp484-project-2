@@ -66,8 +66,9 @@ function triggerPetReaction(imagePath, message) {
   // Clear any existing messages so they don't stack infinitely
   $('.pet-message').remove();
 
-  // 2. Put message before image
-  $('.pet-image').before('<p class="pet-message"><strong>' + pet_info.name + ' says:</strong> ' + message + '</p>');
+  // 2. UNIQUE JQUERY METHOD: .after()
+  // By using an invisible anchor, we can use .after() to insert the message visually before the image
+  $('#message-anchor').after('<p class="pet-message"><strong>' + pet_info.name + ' says:</strong> ' + message + '</p>');
 
   // Set a timer to revert to the default image after 3 seconds (3000 milliseconds)
   resetImageTimer = setTimeout(function() {
