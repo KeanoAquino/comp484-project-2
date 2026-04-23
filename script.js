@@ -52,16 +52,28 @@ function clickedNapButton() {
   checkAndUpdatePetInfoInHtml();
 }
 
+// Global variable to store the timer
+var resetImageTimer;
+
 // Function to handle the visual notifications and image swapping
 function triggerPetReaction(imagePath, message) {
+  // Clear any existing timer so they don't overlap on rapid clicks
+  clearTimeout(resetImageTimer);
+
   // 1. UNIQUE JQUERY METHOD: .replaceWith()
   $('.pet-image').replaceWith('<img class="pet-image" src="' + imagePath + '" alt="My Giga Pet">');
 
   // Clear any existing messages so they don't stack infinitely
   $('.pet-message').remove();
 
-  // 2. UNIQUE JQUERY METHOD: .after()
-  $('.pet-image').after('<p class="pet-message"><strong>' + pet_info.name + ' says:</strong> ' + message + '</p>');
+  // 2. Put message before image
+  $('.pet-image').before('<p class="pet-message"><strong>' + pet_info.name + ' says:</strong> ' + message + '</p>');
+
+  // Set a timer to revert to the default image after 3 seconds (3000 milliseconds)
+  resetImageTimer = setTimeout(function() {
+    $('.pet-image').replaceWith('<img class="pet-image" src="' + imgDefault + '" alt="My Giga Pet">');
+    $('.pet-message').remove(); // Also remove the text bubble
+  }, 3000);
 }
 
 function checkAndUpdatePetInfoInHtml() {
